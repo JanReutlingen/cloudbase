@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay</title>
+    <link rel="stylesheet" href="style/book.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .room-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin-bottom: 18px;
+        }
+        .room-card {
+            background: #fff;
+            border: 1px solid #e3e8ee;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            width: 220px;
+            padding: 0 0 14px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s, border 0.2s;
+            cursor: pointer;
+        }
+        .room-card.selected {
+            border: 2px solid #6a7a7a;
+            box-shadow: 0 4px 18px rgba(106,122,122,0.13);
+        }
+        .room-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .room-card-details {
+            padding: 10px 12px 0 12px;
+            text-align: center;
+        }
+        .room-card-title {
+            font-weight: bold;
+            color: #6a7a7a;
+            font-size: 1.08em;
+            margin-bottom: 4px;
+        }
+        .room-card-desc {
+            color: #6a7a7a;
+            font-size: 0.98em;
+            margin-bottom: 6px;
+        }
+        .room-card-price {
+            color: #6a7a7a;
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 2px;
+        }
+        .event-list { display: flex; flex-direction: column; gap: 14px; }
+        .event-item {
+            background: #fff;
+            border-radius: 7px;
+            padding: 10px 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            border: 1px solid #e3e8ee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .plus-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3em;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #6a7a7a;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .plus-btn.selected {
+            background: #303333;;
+        }
+        .summary {
+            margin: 30px 0 80px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .checkout-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #6a7a7a;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 18px 36px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .room-cards { flex-direction: column; align-items: center; }
+            .room-card { width: 90vw; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Your Stay</h1>
+    </header>
+    <main>
+        <!-- Room Booking Section -->
+        <section id="rooms">
+            <h2>Select a Room</h2>
+            <div class="room-cards" id="room-cards">
+                <div class="room-card selected" data-room="room1" data-price="120">
+                    <img src="/images/room1.jpg" alt="Room 1">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">SUNRISE BEACH VILLA</div>
+                        <div class="room-card-desc">Cozy single room with sea view, queen bed, ensuite bathroom.</div>
+                        <div class="room-card-price">$120/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room2" data-price="140">
+                    <img src="/images/room2.jpg" alt="Room 2">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">LUNA LAGOON VILLA</div>
+                        <div class="room-card-desc">Spacious double room, balcony, king bed, modern amenities.</div>
+                        <div class="room-card-price">$140/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room3" data-price="160">
+                    <img src="/images/room3.jpg" alt="Room 3">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">OCEAN EMBER RESIDENCE</div>
+                        <div class="room-card-desc">Deluxe suite, living area, oceanfront, luxury bath.</div>
+                        <div class="room-card-price">$160/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room4" data-price="180">
+                    <img src="/images/room4.jpg" alt="Room 4">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">AZURE HAVEN RETREAT</div>
+                        <div class="room-card-desc">Family room, two double beds, garden view, kids welcome.</div>
+                        <div class="room-card-price">$180/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room5" data-price="200">
+                    <img src="/images/room5.jpg" alt="Room 5">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">EMERALD FAMILY BEACH VILLA</div>
+                        <div class="room-card-desc">Executive suite, workspace, lounge, premium comfort.</div>
+                        <div class="room-card-price">$200/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room6" data-price="220">
+                    <img src="/images/room6.jpg" alt="Room 6">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">CORAL HORIZON SUITE</div>
+                        <div class="room-card-desc">Penthouse, panoramic view, private terrace, luxury amenities.</div>
+                        <div class="room-card-price">$220/night</div>
+                    </div>
+                </div>
+                <div class="room-card" data-room="room7" data-price="250">
+                    <img src="/images/private4.jpg" alt="Room 7">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">THE ELYSIAN PRIVATE ISLAND</div>
+                        <div class="room-card-desc">Villa, private pool, kitchen, exclusive retreat.</div>
+                        <div class="room-card-price">$250/night</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Date Selection -->
+        <section>
+            <h2>Select Your Stay Dates</h2>
+            <input type="text" id="stay-dates" name="stayDates" placeholder="Select date range" required>
+        </section>
+
+        <!-- Event Booking Section -->
+        <section id="events">
+            <h2>Add Events</h2>
+            <div class="event-list" id="event-list">
+                <div class="event-item">
+                    <span>Wedding ($2000)</span>
+                    <button class="plus-btn" data-event="wedding" data-price="2000">+</button>
+                </div>
+                <div class="event-item">
+                    <span>Yacht ($500)</span>
+                    <button class="plus-btn" data-event="yacht" data-price="500">+</button>
+                </div>
+                <div class="event-item">
+                    <span>Massage ($80)</span>
+                    <button class="plus-btn" data-event="massage" data-price="80">+</button>
+                </div>
+                <div class="event-item">
+                    <span>Snorkeling ($120)</span>
+                    <button class="plus-btn" data-event="snorkeling" data-price="120">+</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Summary -->
+        <div class="summary" id="summary"></div>
+
+        <button class="checkout-btn" id="checkout-btn">Go to Check-out</button>
+    </main>
+
+    <script>
+        // Room prices
+        const roomPrices = {
+            room1: 120,
+            room2: 140,
+            room3: 160,
+            room4: 180,
+            room5: 200,
+            room6: 220,
+            room7: 250
+        };
+
+        // Event prices
+        const eventPrices = {
+            wedding: 2000,
+            yacht: 500,
+            massage: 80,
+            snorkeling: 120
+        };
+
+        // Selected events
+        let selectedEvents = [];
+
+        // Stay dates
+        let stayDates = [];
+
+        // Flatpickr for stay dates
+        flatpickr("#stay-dates", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                stayDates = selectedDates;
+                updateSummary();
+                showRoomsLeftIfDatesSelected();
+            }
+        });
+
+        // Room selection logic
+        document.querySelectorAll('.room-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.room-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                updateSummary();
+            });
+        });
+
+        // Event selection logic
+        document.querySelectorAll('.plus-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const event = this.getAttribute('data-event');
+                if (!selectedEvents.includes(event)) {
+                    selectedEvents.push(event);
+                    this.classList.add('selected');
+                } else {
+                    selectedEvents = selectedEvents.filter(e => e !== event);
+                    this.classList.remove('selected');
+                }
+                updateSummary();
+            });
+        });
+
+        // Update summary
+        function updateSummary() {
+            const selectedRoomCard = document.querySelector('.room-card.selected');
+            const room = selectedRoomCard.getAttribute('data-room');
+            const roomTitle = selectedRoomCard.querySelector('.room-card-title').innerText;
+            const roomDesc = selectedRoomCard.querySelector('.room-card-desc').innerText;
+            const roomPrice = parseInt(selectedRoomCard.getAttribute('data-price'), 10);
+
+            // Calculate nights
+            let nights = 0;
+            let dateText = 'Dates: Not selected';
+            if (stayDates.length === 2) {
+                const diff = Math.abs(stayDates[1] - stayDates[0]);
+                nights = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                dateText = `Dates: ${stayDates[0].toLocaleDateString()} - ${stayDates[1].toLocaleDateString()}`;
+            }
+
+            // Room price total
+            const roomTotal = nights * roomPrice;
+
+            // Events summary
+            let eventsHtml = '';
+            let eventsTotal = 0;
+            if (selectedEvents.length > 0) {
+                eventsHtml = '<ul>';
+                selectedEvents.forEach(ev => {
+                    eventsHtml += `<li>${ev.charAt(0).toUpperCase() + ev.slice(1)} ($${eventPrices[ev]})</li>`;
+                    eventsTotal += eventPrices[ev];
+                });
+                eventsHtml += '</ul>';
+            } else {
+                eventsHtml = 'No events selected';
+            }
+
+            // Total
+            const total = roomTotal + eventsTotal;
+
+            // Update DOM
+            document.getElementById('summary').innerHTML = `
+                <h3>Booking Summary</h3>
+                <div><strong>Room:</strong> ${roomTitle} - ${roomDesc} ($${roomPrice}/night)</div>
+                <div>${dateText}</div>
+                <div><strong>Nights:</strong> ${nights}</div>
+                <div><strong>Events:</strong> ${eventsHtml}</div>
+                <div style="font-weight:bold; margin-top:10px;">Total: $${total}</div>
+            `;
+        }
+
+        // Checkout button
+        document.getElementById('checkout-btn').addEventListener('click', async function() {
+            const selectedRoomCard = document.querySelector('.room-card.selected');
+            const room = selectedRoomCard.getAttribute('data-room');
+            const roomTitle = selectedRoomCard.querySelector('.room-card-title').innerText;
+            const roomDesc = selectedRoomCard.querySelector('.room-card-desc').innerText;
+            const roomPrice = parseInt(selectedRoomCard.getAttribute('data-price'), 10);
+            let nights = 0;
+            if (stayDates.length === 2) {
+                const diff = Math.abs(stayDates[1] - stayDates[0]);
+                nights = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            }
+            const events = selectedEvents.map(ev => ({
+                name: ev,
+                price: eventPrices[ev]
+            }));
+            const booking = {
+                room,
+                roomTitle,
+                roomDesc,
+                roomPrice,
+                nights,
+                stayDates: stayDates.map(d => d.toISOString()),
+                events
+            };
+            await fetch('/save-booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(booking)
+            });
+            window.location.href = '/shop';
+        });
+
+        // Initial summary
+        updateSummary();
+
+        // Generate random "rooms left" for each room card and store the value
+        document.querySelectorAll('.room-card').forEach(card => {
+            const left = Math.floor(Math.random() * 6) + 1; // 1 to 6 rooms left
+            const badge = card.querySelector('.rooms-left');
+            badge.innerText = `${left} left`;
+            badge.classList.remove('visible'); // Hide initially
+        });
+
+        // Show badges only when a date range is selected
+        function showRoomsLeftIfDatesSelected() {
+            if (stayDates.length === 2) {
+                document.querySelectorAll('.rooms-left').forEach(badge => badge.classList.add('visible'));
+            } else {
+                document.querySelectorAll('.rooms-left').forEach(badge => badge.classList.remove('visible'));
+            }
+        }
+
+        // Also call once on page load in case dates are pre-filled
+        showRoomsLeftIfDatesSelected();
+
+        fetch('/shop-badge')
+            .then(res => res.json())
+            .then(data => {
+                if (data.hasBooking) {
+                document.getElementById('shop-badge').style.display = 'inline-block';
+                }
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+/* General Styles */
+body {
+    background: #fff;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    color: #4a4a4a;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.hero-overlay h1 {
+    font-size: 2rem;
+    text-shadow: 0 4px 24px #000a;
+    color: #fff;
+    padding: 1.5rem 3rem;
+    border-radius: 1rem;
+    font-family: Copperplate, Papyrus, fantasy;
+    letter-spacing: 0.04em;
+}
+
+
+.intro {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.intro h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.intro h4 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    color: #6a7a7a;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+
+/* Activities Section */
+.activities-section {
+    padding: 0;
+    background: #f7fafd;
+}
+
+.activities-section h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #4a4a4a;
+    margin: 2.5rem 0 2rem 0;
+    letter-spacing: 0.04em;
+    font-family: Copperplate, Papyrus, fantasy;
+
+}
+
+.activities-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.activity {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.activity img {
+    width: 100vw;
+    max-width: 100vw;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.activity-info {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 1.2rem;
+    padding: 2rem 2rem 1.5rem 2rem;
+    margin-top: -60px;
+    position: relative;
+    z-index: 2;
+}
+
+.activity-info h3 {
+    font-size: 2rem;
+    color: #5d7c6b;
+    margin-bottom: 0.7rem;
+}
+
+.activity-info p {
+    font-size: 1.15rem;
+    color: #6a7a7a;
+    margin-bottom: 0.7rem;
+}
+
+.activity-info ul {
+    list-style: disc inside;
+    color: #4a4a4a;
+    font-size: 1.05rem;
+    margin: 0;
+    padding-left: 1rem;
+}
+
+/* Editorial Experiences */
+.editorial-experiences {
+    width: 100%;
+    padding: 3rem 0;
+}
+
+.editorial-row {
+    display: flex;
+    max-width: 100vw;
+    margin: 0 auto 3rem auto;
+    gap: 0;
+    align-items: stretch;
+}
+
+.editorial-col.left,
+.editorial-col.left1,
+.editorial-col.left2,
+.editorial-col.left3 {
+    flex: 0 1 36%;
+    padding: 2rem 1rem 2rem 3vw;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    font-family: Copperplate, Papyrus, fantasy;
+    font-size: 1.5rem;
+}
+.editorial-col.right,
+.editorial-col.right1,
+.editorial-col.right2,
+.editorial-col.right3 {
+    font-family: Copperplate, Papyrus, fantasy;
+    flex: 1 1 64%;
+    padding: 2rem 3vw 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.editorial-col h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Georgia', serif;
+    letter-spacing: 0.04em;
+    text-align: center;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.editorial-col p {
+    font-size: 1.08rem;
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+/* Editorial left image max-width 400px, right media min-width 900px, 16:9 aspect for right */
+.editorial-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 1.2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 24px #e0f2ff;
+    background: #eee;
+}
+
+.editorial-img.large {
+    width: 100%;
+    min-width: 800px;
+    aspect-ratio: 16/9;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1.2rem;
+    background: #eee;
+    max-width: 100%;
+}
+
+.editorial-col.left,
+.editorial-col.left1,
+.editorial-col.left2,
+.editorial-col.left3 {
+    flex: 0 1 36%;
+    padding: 2rem 1rem 2rem 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 400px;
+}
+
+.editorial-col.right,
+.editorial-col.right1,
+.editorial-col.right2,
+.editorial-col.right3 {
+    flex: 1 1 64%;
+    padding: 2rem 3vw 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 900px;
+}
+
+@media (max-width: 1200px) {
+    .editorial-img.large,
+    .editorial-col.right,
+    .editorial-col.right1,
+    .editorial-col.right2,
+    .editorial-col.right3 {
+        min-width: 0;
+        width: 100%;
+    }
+    .editorial-img.large {
+        aspect-ratio: 16/9;
+        max-width: 100vw;
+    }
+}
+
+@media (max-width: 1100px) {
+    .hero, .hero-video { height: 35vh; min-height: 200px; }
+    .editorial-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .editorial-col.left,
+    .editorial-col.left1,
+    .editorial-col.left2,
+    .editorial-col.left3,
+    .editorial-col.right,
+    .editorial-col.right1,
+    .editorial-col.right2,
+    .editorial-col.right3 {
+        padding: 1.2rem;
+    }
+    .editorial-img.large {
+        max-width: 100vw;
+        min-width: 0;
+        aspect-ratio: 16/9;
+    }
+    .editorial-img {
+        max-width: 100vw;
+        aspect-ratio: 4/3;
+    }
+    .editorial-col h2 {
+        font-size: 1.3rem;
+        font-family: Copperplate, Papyrus, fantasy;
+    }
+    .editorial-col p {
+        font-size: 0.98rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-video { height: 35vh; }
+    .activity img { height: 200px; }
+    .activity-info { padding: 1.2rem 0.7rem; }
+    .activity-info h3 { font-size: 1.3rem; }
+    .activities-section h2 { font-size: 1.5rem; }
+    .editorial-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .editorial-col.left,
+    .editorial-col.left1,
+    .editorial-col.left2,
+    .editorial-col.left3,
+    .editorial-col.right,
+    .editorial-col.right1,
+    .editorial-col.right2,
+    .editorial-col.right3 {
+        padding: 1.2rem;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .editorial-img,
+    .editorial-img.large {
+        max-width: 100vw;
+        min-width: 0;
+        width: 100%;
+    }
+}

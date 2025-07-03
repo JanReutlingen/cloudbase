@@ -1,0 +1,65 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hotel-backend
+    restart: always
+    ports:
+      - "${WEBSERVER_PORT}:${WEBSERVER_PORT}"
+    depends_on:
+      - db
+      - minio
+      - redis
+    env_file:
+      - .env
+    networks:
+      - hotel-net
+
+  db:
+    image: mariadb:latest
+    container_name: hotel-maria-db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIA_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIA_DATABASE}
+      MARIADB_USER: ${MARIA_USER}
+      MARIADB_PASSWORD: ${MARIA_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mariadb
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - hotel-net
+
+  minio:
+    image: minio/minio
+    container_name: hotel-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    networks:
+      - hotel-net
+
+  redis:
+    image: redis:7
+    container_name: hotel-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - hotel-net
+
+networks:
+  hotel-net:
+
+volumes:
+  db-data:
+  minio-data:

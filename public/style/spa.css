@@ -1,0 +1,125 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7fafd;
+    color: #4a4a4a;
+}
+
+/* Hero Section */
+.spa-hero {
+    position: relative;
+    height: 90vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-slideshow img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-slideshow img:first-child {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 1rem;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.hero-overlay h1 {
+    font-family: Copperplate, Papyrus, fantasy;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-overlay p {
+    font-family: Copperplate, Papyrus, fantasy;
+    font-size: 1.5rem;
+}
+
+
+/* Relaxing Photos Section */
+.relaxing-photos-section {
+    padding: 2rem;
+    text-align: center;
+    background: #f7fafd;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.relaxing-photos-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.relaxing-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.relaxing-gallery img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Video Section Styling */
+.spa-video-section {
+    text-align: center;
+    margin: 3rem 0;
+    padding: 1rem;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.spa-video-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #4a4a4a;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.spa-video-section p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: #6a7a7a;
+    font-family: Copperplate, Papyrus, fantasy;
+}
+
+.spa-video {
+    width: 100%;
+    max-width: 1300px;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}

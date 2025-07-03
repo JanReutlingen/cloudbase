@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining</title>
+    <link rel="stylesheet" href="/style/dining.css">
+</head>
+<body>
+    <!-- Hero Section with Rotating Images -->
+    <section class="dining-hero">
+        <div class="hero-slideshow">
+            <img src="/images/strandbar.jpg" alt="Restaurant 1">
+            <img src="/images/underwater.jpg" alt="Restaurant 2">
+            <img src="/images/restaurant.jpg" alt="Restaurant 3">
+        </div>
+        <div class="hero-overlay">
+            <h1>Exquisite Dining Experiences</h1>
+        </div>
+    </section>
+
+    <!-- Dining Section -->
+    <section class="dining-section">
+        <div class="restaurant">
+            <img src="/images/restaurant.jpg" alt="Ocean Breeze Restaurant">
+            <div class="restaurant-info">
+                <h2>Ocean Breeze Restaurant</h2>
+                <p>Enjoy fresh seafood and international cuisine with breathtaking ocean views. Our chefs use the finest ingredients to create unforgettable dishes.</p>
+            </div>
+        </div>
+        <div class="restaurant">
+            <img src="/images/underwater.jpg" alt="Garden Grill">
+            <div class="restaurant-info">
+                <h2>Undersea Restaurant</h2>
+                <p>Send your senses on a journey and experience the world's largest, fully glass-enclosed underwater restaurant at the Hurawalhi Resort in the Maldives.</p>
+            </div>
+        </div>
+        <div class="restaurant">
+            <img src="/images/strandbar.jpg" alt="Sunset Lounge">
+            <div class="restaurant-info">
+                <h2>Sunset Lounge</h2>
+                <p>Relax with a cocktail in hand as you watch the sun dip below the horizon. The Sunset Lounge offers light bites and a wide selection of beverages.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="food-gallery-section">
+    <h2>Delicious Creations</h2>
+    <div class="food-gallery">
+        <div class="food-item">
+            <img src="/images/essen1.jpg" alt="Gourmet Dish">
+            <p>Gourmet Dish</p>
+        </div>
+        <div class="food-item">
+            <img src="/images/Sushi.jpg" alt="Sushi">
+            <p>Exquisite Sushi</p>
+        </div>
+        <div class="food-item">
+            <img src="/images/essen2.jpg" alt="Appetizer">
+            <p>Fresh Cocktails</p>
+        </div>
+    </div>
+    </section>
+    <script>
+        // Rotating images for the hero section
+        const slideshowImages = document.querySelectorAll('.hero-slideshow img');
+        let currentImageIndex = 0;
+
+        function rotateImages() {
+            slideshowImages[currentImageIndex].style.opacity = 0;
+            currentImageIndex = (currentImageIndex + 1) % slideshowImages.length;
+            slideshowImages[currentImageIndex].style.opacity = 1;
+        }
+
+        setInterval(rotateImages, 5000); // Change image every 5 seconds
+    </script>
+</body>
+</html>

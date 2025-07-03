@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Serenity Maldives</title>
+    <link href="icons/logo_final.png" type="icon/x-icon" rel="icon">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="scripts/mainLayout.js"></script>
+</head>
+
+<body>
+    <nav class="navbar island-navbar">
+        <div class="nav-links nav-links-left">
+            <a href="/dining">Dining</a>
+            <a href="/rooms">Accommodations</a>
+            <a href="/spa">Spa & Wellness</a>
+        </div>
+        <span class="logo-center" onclick="window.location.href='/'">
+            <img src="icons/logo_final.png" alt="Logo">
+            <div class="hotel-name">Azure Serenity Maldives</div>
+        </span>
+        <div class="nav-links nav-links-right">
+            <a href="/experiences">Experiences</a>
+            <a href="/about">About us</a>
+            <a href="/book">Book now</a>
+            <a href="/shop" class="shop-link" style="position: relative;">
+                <img src="/icons/cart.png" alt="Cart" class="cart-icon" style="width:28px;vertical-align:middle;">
+                <span id="shop-badge" class="shop-badge" style="display:none;">1</span>
+            </a>
+        </div>
+    </nav>
+
+    <%- body %>
+
+        <footer id="main-footer">
+            <div class="footer-content">
+                <div class="footer-logo"></div>
+                <div class="footer-address">
+                    <p>Azure Serenity Maldives</p>
+                    <p>H.Aagadhage 4th Floor, Boduthakurufaanu Magu</p>
+                    <p>Male 20066 Kaafu Atoll, Republic of Maldives </p>
+                </div>
+                <div class="footer-contact">
+                    <p>Email: <a href="mailto:info@azureserenity.com">info@azureserenity.com</a></p>
+                </div>
+            </div>
+        </footer>
+</body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/shop-badge')
+      .then(res => res.json())
+      .then(data => {
+        if (data.hasBooking) {
+          document.getElementById('shop-badge').style.display = 'inline-block';
+        }
+      });
+});
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Booking Summary</title>
+    <link rel="stylesheet" href="style/shop.css">
+    <style>
+        .summary { max-width: 600px; margin: 40px auto; margin-top: 100px;}
+        .summary h2 { color: #6a7a7a; }
+        .summary ul { margin: 0; }
+        .contact-form { margin-top: 32px; }
+        .contact-form label { display: block; margin-top: 12px; }
+        .contact-form input, .contact-form select { width: 100%; padding: 8px; margin-top: 4px; }
+        .contact-form button { margin-top: 18px; }
+        .paypal-sim {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .paypal-btn {
+            background: #ffc439;
+            color: #111;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 32px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .booking-details { margin-top: 20px; }
+        .booking-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .booking-row.last {
+            border-bottom: none;
+        }
+        .label { font-weight: bold; }
+        .value { font-size: 1.2em;}
+        .price { color: #e67e22; }
+        .total-row { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="summary">
+            <% if (booking && booking.room) { %>
+                <button class="delete-btn" id="delete-booking" title="Delete Booking">
+                    <img src="/icons/delete.svg" alt="Delete">
+                </button>
+            <% } %>
+            <h2>Your Booking</h2>
+            <% if (booking && booking.room) { %>
+                <div class="booking-details">
+                    <div class="booking-row">
+                        <span class="label">Room:</span>
+                        <span class="value"><strong><%= booking.roomTitle %></strong> – <span class="price">($<%= booking.roomPrice %>/night)</span></span>
+                    </div>
+                    <div class="booking-row">
+                        <span class="label">Dates:</span>
+                        <span class="value">
+                            <% if (booking.stayDates && booking.stayDates.length === 2) { %>
+                                <%= new Date(booking.stayDates[0]).toLocaleDateString() %> – <%= new Date(booking.stayDates[1]).toLocaleDateString() %>
+                            <% } else { %>
+                                Not selected
+                            <% } %>
+                        </span>
+                    </div>
+                    <div class="booking-row">
+                        <span class="label">Nights:</span>
+                        <span class="value"><%= booking.nights %></span>
+                    </div>
+                    <div class="booking-row">
+                        <span class="label">Events:</span>
+                        <span class="value">
+                            <% if (booking.events && booking.events.length > 0) { %>
+                                <%= booking.events.map(ev => ev.name.charAt(0).toUpperCase() + ev.name.slice(1) + " ($" + ev.price + ")").join(", ") %>
+                            <% } else { %>
+                                None
+                            <% } %>
+                        </span>
+                    </div>
+                    <div class="booking-row total-row">
+                        <span class="label">Total:</span>
+                        <span class="value total">$<%= booking.nights * booking.roomPrice + (booking.events ? booking.events.reduce((a, b) => a + b.price, 0) : 0) %></span>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form" method="POST" action="/buy">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" required>
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" required>
+                    <label for="address">Address</label>
+                    <input type="text" name="address" required>
+                    <label for="city">City</label>
+                    <input type="text" name="city" required>
+                    <label for="postal">Postal Code</label>
+                    <input type="text" name="postal" required>
+                    <label for="country">Country</label>
+                    <select name="country" required>
+                        <option value="">Select country</option>
+                        <option>Germany</option>
+                        <option>Austria</option>
+                        <option>Switzerland</option>
+                        <option>France</option>
+                        <option>Italy</option>
+                        <option>Other</option>
+                    </select>
+                    <button type="submit">Buy now</button>
+                </form>
+                <div class="paypal-sim" id="paypal-sim" style="display:none;">
+                    <p>Redirecting to PayPal...</p>
+                    <button class="paypal-btn" onclick="window.location.href='https://www.paypal.com/'">
+                        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" style="height:1.2em;vertical-align:middle;margin-right:8px;">
+                        Pay with PayPal
+                    </button>
+                </div>
+            <% } else { %>
+                <p>No booking found.</p>
+            <% } %>
+        </div>
+    </main>
+</body>
+
+<script>
+fetch('/shop-badge')
+  .then(res => res.json())
+  .then(data => {
+    if (data.hasBooking) {
+      var badge = document.getElementById('shop-badge');
+      if (badge) badge.style.display = 'inline-block';
+    }
+  });
+
+// Delete booking button
+const delBtn = document.getElementById('delete-booking');
+if (delBtn) {
+    delBtn.addEventListener('click', function() {
+        fetch('/delete-booking', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) location.reload();
+            });
+    });
+}
+
+// Simulate PayPal forwarding
+const form = document.getElementById('contact-form');
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        form.style.display = 'none';
+        document.getElementById('paypal-sim').style.display = 'block';
+        setTimeout(() => {
+            window.location.href = 'https://www.paypal.com/';
+        }, 2500);
+    });
+}
+</script>
+
+</html>
