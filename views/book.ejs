@@ -7,113 +7,18 @@
     <link rel="stylesheet" href="style/book.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <style>
-        .room-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 22px;
-            margin-bottom: 18px;
-        }
-        .room-card {
-            background: #fff;
-            border: 1px solid #e3e8ee;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            width: 220px;
-            padding: 0 0 14px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: box-shadow 0.2s, border 0.2s;
-            cursor: pointer;
-        }
-        .room-card.selected {
-            border: 2px solid #6a7a7a;
-            box-shadow: 0 4px 18px rgba(106,122,122,0.13);
-        }
-        .room-card img {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-        .room-card-details {
-            padding: 10px 12px 0 12px;
-            text-align: center;
-        }
-        .room-card-title {
-            font-weight: bold;
-            color: #6a7a7a;
-            font-size: 1.08em;
-            margin-bottom: 4px;
-        }
-        .room-card-desc {
-            color: #6a7a7a;
-            font-size: 0.98em;
-            margin-bottom: 6px;
-        }
-        .room-card-price {
-            color: #6a7a7a;
-            font-weight: bold;
-            font-size: 1.05em;
-            margin-bottom: 2px;
-        }
-        .event-list { display: flex; flex-direction: column; gap: 14px; }
-        .event-item {
-            background: #fff;
-            border-radius: 7px;
-            padding: 10px 18px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-            border: 1px solid #e3e8ee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .plus-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.3em;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #6a7a7a;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .plus-btn.selected {
-            background: #303333;;
-        }
-        .summary {
-            margin: 30px 0 80px 0;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .checkout-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #6a7a7a;
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            padding: 18px 36px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-        @media (max-width: 900px) {
-            .room-cards { flex-direction: column; align-items: center; }
-            .room-card { width: 90vw; }
-        }
-    </style>
 </head>
 <body>
     <header>
         <h1>Book Your Stay</h1>
     </header>
     <main>
+        <!-- Date Selection - moved to top -->
+        <section class="calendar-section">
+            <h2>Select Your Stay Dates</h2>
+            <input type="text" id="stay-dates" name="stayDates" placeholder="Select date range" required>
+        </section>
+
         <!-- Room Booking Section -->
         <section id="rooms">
             <h2>Select a Room</h2>
@@ -184,12 +89,6 @@
             </div>
         </section>
 
-        <!-- Date Selection -->
-        <section>
-            <h2>Select Your Stay Dates</h2>
-            <input type="text" id="stay-dates" name="stayDates" placeholder="Select date range" required>
-        </section>
-
         <!-- Event Booking Section -->
         <section id="events">
             <h2>Add Events</h2>
@@ -245,14 +144,20 @@
         // Stay dates
         let stayDates = [];
 
-        // Flatpickr for stay dates
+        // Flatpickr for stay dates - with expanded calendar
         flatpickr("#stay-dates", {
             mode: "range",
             dateFormat: "Y-m-d",
+            inline: true,
+            showMonths: 2, // Zeigt zwei Monate nebeneinander an
             onChange: function(selectedDates, dateStr, instance) {
                 stayDates = selectedDates;
                 updateSummary();
                 showRoomsLeftIfDatesSelected();
+                // Kalender schließen, wenn beide Daten ausgewählt wurden
+                if (selectedDates.length === 2) {
+                    instance.close();
+                }
             }
         });
 

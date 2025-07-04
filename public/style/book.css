@@ -13,7 +13,7 @@ header {
     background: #fff;
     color:#6a7a7a; 
     letter-spacing: 1px;
-    padding-top: 100px;
+    margin-top: 80px; /* Passe ggf. an die Höhe deiner Navbar an */
     text-align: center;
 }
 
@@ -260,7 +260,7 @@ li {
 .room-card {
     background: #fff;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     width: 220px;
     padding: 0 0 14px 0;
@@ -272,15 +272,15 @@ li {
 }
 
 .room-card.selected {
-    border: 2.5px solid #6a7a7a;
-    box-shadow: 0 4px 18px rgba(45,90,74,0.13);
+    border: 2px solid #6a7a7a;
+    box-shadow: 0 4px 18px rgba(106,122,122,0.13);
 }
 
 .room-card img {
     width: 100%;
     height: 130px;
     object-fit: cover;
-    border-radius: 12px 12px 0 0;
+    border-radius: 10px 10px 0 0;
 }
 
 .room-card-details {
@@ -306,4 +306,197 @@ li {
     font-weight: bold;
     font-size: 1.05em;
     margin-bottom: 2px;
+}
+
+/* Calendar styling - make it larger and always visible */
+.calendar-section {
+    margin-bottom: 40px;
+    z-index: 2;
+    position: relative;
+}
+
+.calendar-section h2 {
+    margin-bottom: 20px;
+}
+
+#stay-dates {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    font-size: 1.1em;
+    border: 2px solid #e3e8ee;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    z-index: 2;
+    position: relative;
+}
+
+/* Flatpickr Kalender immer sichtbar und über anderen Elementen */
+.flatpickr-calendar {
+    width: 700px !important;
+    max-width: 98vw !important;
+    min-width: 350px !important;
+    font-size: 1em !important;
+    z-index: 9999 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+}
+
+.flatpickr-days {
+    min-height: 340px !important;
+}
+
+.flatpickr-day {
+    height: 60px !important;
+    line-height: 60px !important;
+    width: 60px !important;
+    font-size: 1em !important;
+}
+
+.flatpickr-weekday {
+    font-size: 1em !important;
+    height: 45px !important;
+    line-height: 45px !important;
+}
+
+.flatpickr-current-month {
+    font-size: 1em !important;
+    padding: 16px 0 !important;
+}
+
+.room-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 18px;
+}
+
+.room-card {
+    background: #fff;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    width: 220px;
+    padding: 0 0 14px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s, border 0.2s;
+    cursor: pointer;
+}
+
+.room-card.selected {
+    border: 2px solid #6a7a7a;
+    box-shadow: 0 4px 18px rgba(106,122,122,0.13);
+}
+
+.room-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.room-card-details {
+    padding: 10px 12px 0 12px;
+    text-align: center;
+}
+
+.room-card-title {
+    font-weight: bold;
+    color: #6a7a7a;
+    font-size: 1.08em;
+    margin-bottom: 4px;
+}
+
+.room-card-desc {
+    color: #6a7a7a;
+    font-size: 0.98em;
+    margin-bottom: 6px;
+}
+
+.room-card-price {
+    color: #6a7a7a;
+    font-weight: bold;
+    font-size: 1.05em;
+    margin-bottom: 2px;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.event-item {
+    background: #fff;
+    border-radius: 7px;
+    padding: 10px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    border: 1px solid #e3e8ee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.plus-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.3em;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #6a7a7a;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.plus-btn.selected {
+    background: #303333;
+}
+
+.summary {
+    margin: 30px 0 80px 0;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.checkout-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #6a7a7a;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 18px 36px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .room-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .room-card {
+        width: 90vw;
+    }
+    
+    .flatpickr-calendar {
+        max-width: 90vw !important;
+    }
+    
+    .flatpickr-day {
+        height: 40px !important;
+        line-height: 40px !important;
+        width: 40px !important;
+    }
 }
