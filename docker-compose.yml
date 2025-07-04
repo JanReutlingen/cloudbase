@@ -57,6 +57,36 @@ services:
     networks:
       - hotel-net
 
+  init-bucket:
+    image: minio/mc
+    container_name: minio-init
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - ./public/content:/content
+    entrypoint: >
+      /bin/sh -c "
+      echo '⏳ Waiting for MinIO to be ready...';
+      until mc alias set myminio http://minio:9000 \$$MINIO_ROOT_USER \$$MINIO_ROOT_PASSWORD; do
+        echo 'MinIO not ready, retrying in 3 seconds...';
+        sleep 3;
+      done;
+      echo '✅ Connected to MinIO successfully';
+      echo '📁 Creating public bucket...';
+      mc mb myminio/public --ignore-existing;
+      echo '📤 Uploading content files...';
+      mc mirror /content myminio/public --overwrite;
+      echo '🌐 Making bucket public...';
+      mc anonymous set public myminio/public;
+      echo '✅ All files uploaded and bucket is now public';
+      echo '🔗 Access your files at: http://localhost:9000/public/';
+      "
+    networks:
+      - hotel-net
+
 networks:
   hotel-net:
 

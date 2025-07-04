@@ -4,9 +4,69 @@
     </div>
     <div class="main-content">
         <section class="hero">
-            <video class="hero-video" src="videos/main_video.mp4" autoplay loop muted playsinline></video>
+            <video class="hero-video" src="http://localhost:9000/public/main_video.mp4" autoplay loop muted playsinline></video>
             <div class="hero-overlay">
                 <h1>Experience Perfection</h1>
+            </div>
+        </section>
+        <!-- Hotel Reviews Section -->
+        <section class="reviews-section">
+            <div class="reviews-container">
+                <h3 class="reviews-title">Was Gästen, die hier übernachtet haben, am besten gefallen hat</h3>
+                <div class="reviews-carousel">
+                    <div class="review-card active" data-review="1">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <span class="avatar-initial">J</span>
+                                <img src="https://flagcdn.com/w20/in.png" alt="India" class="country-flag">
+                            </div>
+                            <div class="reviewer-details">
+                                <span class="reviewer-name">Ramesh Singh</span>
+                                <span class="reviewer-country">🇮🇳 Indien</span>
+                            </div>
+                        </div>
+                        <p class="review-text">„Es war wunderschön dort. Einer der schönsten Erlebnisse meines Lebens."</p>
+                        <p class="review-highlight">„Die Aktivitäten auf der Insel waren super"</p>
+                    </div>
+                    
+                    <div class="review-card" data-review="2">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <span class="avatar-initial">M</span>
+                                <img src="https://flagcdn.com/w20/my.png" alt="Malaysia" class="country-flag">
+                            </div>
+                            <div class="reviewer-details">
+                                <span class="reviewer-name">Manuel Brown</span>
+                                <span class="reviewer-country">🇲🇾 Malaysia</span>
+                            </div>
+                        </div>
+                        <p class="review-text">„Nicht schlecht, aber waren sie schon einmal am Esslinger Bahnhof?"</p>
+                    </div>
+                    
+                    <div class="review-card" data-review="3">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <span class="avatar-initial">A</span>
+                                <img src="https://flagcdn.com/w20/ro.png" alt="Romania" class="country-flag">
+                            </div>
+                            <div class="reviewer-details">
+                                <span class="reviewer-name">Andreea</span>
+                                <span class="reviewer-country">🇷🇴 Rumänien</span>
+                            </div>
+                        </div>
+                        <p class="review-text">„Das Appartement war luxuriös und groß mit schöner großer Terrasse und Seeblick. Die Insel ist wunderschön. Es war sehr gut ausgestattet. Man bekommt viele Pflegeprodukt, Handtücher und große Bademantel."</p>
+                    </div>
+                </div>
+                
+                <div class="reviews-navigation">
+                    <button class="nav-btn prev-btn" onclick="previousReview()">‹</button>
+                    <div class="review-indicators">
+                        <span class="indicator active" data-review="1"></span>
+                        <span class="indicator" data-review="2"></span>
+                        <span class="indicator" data-review="3"></span>
+                    </div>
+                    <button class="nav-btn next-btn" onclick="nextReview()">›</button>
+                </div>
             </div>
         </section>
         <div class="welcome-text">
@@ -16,7 +76,7 @@
         <section id="experiences" class="experiences-section-alt">
             <div class="experience-row">
                 <div class="experience-img">
-                    <img src="images/fitness.jpg" alt="Clubhouse & Fitness">
+                    <img src="http://localhost:9000/public/fitness.jpg" alt="Clubhouse & Fitness">
                 </div>
                 <div class="experience-text">
                     <div class="experience-label">Experiences</div>
@@ -26,7 +86,7 @@
             </div>
             <div class="experience-row reverse">
                 <div class="experience-img">
-                    <img src="images/tauchen.jpg" alt="Water Sports">
+                    <img src="http://localhost:9000/public/tauchen.jpg" alt="Water Sports">
                 </div>
                 <div class="experience-text">
                     <div class="experience-label">Experiences</div>
@@ -36,7 +96,7 @@
             </div>
             <div class="experience-row">
                 <div class="experience-img">
-                    <img src="images/massage.jpg" alt="Spa & Wellness">
+                    <img src="http://localhost:9000/public/massage.jpg" alt="Spa & Wellness">
                 </div>
                 <div class="experience-text">
                     <div class="experience-label">Experiences</div>
@@ -46,7 +106,7 @@
             </div>
             <div class="experience-row reverse">
                 <div class="experience-img">
-                    <img src="images/essen.jpg" alt="Dining">
+                    <img src="http://localhost:9000/public/essen.jpg" alt="Dining">
                 </div>
                 <div class="experience-text">
                     <div class="experience-label">Experiences</div>

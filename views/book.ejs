@@ -23,69 +23,7 @@
         <section id="rooms">
             <h2>Select a Room</h2>
             <div class="room-cards" id="room-cards">
-                <div class="room-card selected" data-room="room1" data-price="120">
-                    <img src="/images/room1.jpg" alt="Room 1">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">SUNRISE BEACH VILLA</div>
-                        <div class="room-card-desc">Cozy single room with sea view, queen bed, ensuite bathroom.</div>
-                        <div class="room-card-price">$120/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room2" data-price="140">
-                    <img src="/images/room2.jpg" alt="Room 2">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">LUNA LAGOON VILLA</div>
-                        <div class="room-card-desc">Spacious double room, balcony, king bed, modern amenities.</div>
-                        <div class="room-card-price">$140/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room3" data-price="160">
-                    <img src="/images/room3.jpg" alt="Room 3">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">OCEAN EMBER RESIDENCE</div>
-                        <div class="room-card-desc">Deluxe suite, living area, oceanfront, luxury bath.</div>
-                        <div class="room-card-price">$160/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room4" data-price="180">
-                    <img src="/images/room4.jpg" alt="Room 4">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">AZURE HAVEN RETREAT</div>
-                        <div class="room-card-desc">Family room, two double beds, garden view, kids welcome.</div>
-                        <div class="room-card-price">$180/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room5" data-price="200">
-                    <img src="/images/room5.jpg" alt="Room 5">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">EMERALD FAMILY BEACH VILLA</div>
-                        <div class="room-card-desc">Executive suite, workspace, lounge, premium comfort.</div>
-                        <div class="room-card-price">$200/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room6" data-price="220">
-                    <img src="/images/room6.jpg" alt="Room 6">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">CORAL HORIZON SUITE</div>
-                        <div class="room-card-desc">Penthouse, panoramic view, private terrace, luxury amenities.</div>
-                        <div class="room-card-price">$220/night</div>
-                    </div>
-                </div>
-                <div class="room-card" data-room="room7" data-price="250">
-                    <img src="/images/private4.jpg" alt="Room 7">
-                    <span class="rooms-left"></span>
-                    <div class="room-card-details">
-                        <div class="room-card-title">THE ELYSIAN PRIVATE ISLAND</div>
-                        <div class="room-card-desc">Villa, private pool, kitchen, exclusive retreat.</div>
-                        <div class="room-card-price">$250/night</div>
-                    </div>
-                </div>
+                <!-- Room cards will be loaded dynamically from database -->
             </div>
         </section>
 
@@ -93,22 +31,7 @@
         <section id="events">
             <h2>Add Events</h2>
             <div class="event-list" id="event-list">
-                <div class="event-item">
-                    <span>Wedding ($2000)</span>
-                    <button class="plus-btn" data-event="wedding" data-price="2000">+</button>
-                </div>
-                <div class="event-item">
-                    <span>Yacht ($500)</span>
-                    <button class="plus-btn" data-event="yacht" data-price="500">+</button>
-                </div>
-                <div class="event-item">
-                    <span>Massage ($80)</span>
-                    <button class="plus-btn" data-event="massage" data-price="80">+</button>
-                </div>
-                <div class="event-item">
-                    <span>Snorkeling ($120)</span>
-                    <button class="plus-btn" data-event="snorkeling" data-price="120">+</button>
-                </div>
+                <!-- Event items will be loaded dynamically from database -->
             </div>
         </section>
 
@@ -119,24 +42,11 @@
     </main>
 
     <script>
-        // Room prices
-        const roomPrices = {
-            room1: 120,
-            room2: 140,
-            room3: 160,
-            room4: 180,
-            room5: 200,
-            room6: 220,
-            room7: 250
-        };
-
-        // Event prices
-        const eventPrices = {
-            wedding: 2000,
-            yacht: 500,
-            massage: 80,
-            snorkeling: 120
-        };
+        // Room and event data will be loaded from database
+        let roomPrices = {};
+        let eventPrices = {};
+        let roomsData = [];
+        let eventsData = [];
 
         // Selected events
         let selectedEvents = [];
@@ -144,54 +54,161 @@
         // Stay dates
         let stayDates = [];
 
+        // Load room and event data from database
+        async function loadData() {
+            try {
+                // Load rooms
+                const roomsResponse = await fetch('/api/rooms');
+                roomsData = await roomsResponse.json();
+                
+                // Load events
+                const eventsResponse = await fetch('/api/events');
+                eventsData = await eventsResponse.json();
+                
+                // Create price objects for compatibility
+                roomsData.forEach(room => {
+                    roomPrices[room.room_key] = room.price_per_night;
+                });
+                
+                eventsData.forEach(event => {
+                    eventPrices[event.event_key] = event.price;
+                });
+                
+                // Update room cards with database data
+                updateRoomCards();
+                
+                // Update event list with database data
+                updateEventList();
+                
+                // Initial summary
+                updateSummary();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Fallback to hardcoded values if database fails
+                roomPrices = {
+                    room1: 120,
+                    room2: 140,
+                    room3: 160,
+                    room4: 180,
+                    room5: 200,
+                    room6: 220,
+                    room7: 250
+                };
+                eventPrices = {
+                    wedding: 2000,
+                    yacht: 500,
+                    massage: 80,
+                    snorkeling: 120
+                };
+                updateSummary();
+            }
+        }
+
+        // Update room cards with database data
+        function updateRoomCards() {
+            const roomCardsContainer = document.getElementById('room-cards');
+            roomCardsContainer.innerHTML = '';
+            
+            roomsData.forEach((room, index) => {
+                const isSelected = index === 0 ? 'selected' : '';
+                const roomCard = document.createElement('div');
+                roomCard.className = `room-card ${isSelected}`;
+                roomCard.setAttribute('data-room', room.room_key);
+                roomCard.setAttribute('data-price', room.price_per_night);
+                // Ensure MinIO URL for images - extract just filename
+                let imageUrl = room.image_path;
+                if (imageUrl && !imageUrl.startsWith('http')) {
+                    // Extract just the filename from path like '/images/room1.jpg' -> 'room1.jpg'
+                    const filename = imageUrl.split('/').pop();
+                    imageUrl = `http://localhost:9000/public/${filename}`;
+                }
+                roomCard.innerHTML = `
+                    <img src="${imageUrl}" alt="${room.title}">
+                    <span class="rooms-left"></span>
+                    <div class="room-card-details">
+                        <div class="room-card-title">${room.title}</div>
+                        <div class="room-card-desc">${room.description}</div>
+                        <div class="room-card-price">$${room.price_per_night}/night</div>
+                    </div>
+                `;
+                
+                roomCardsContainer.appendChild(roomCard);
+                
+                // Add click event
+                roomCard.addEventListener('click', function() {
+                    document.querySelectorAll('.room-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    updateSummary();
+                });
+            });
+            
+            // Generate random "rooms left" for each room card
+            document.querySelectorAll('.room-card').forEach(card => {
+                const left = Math.floor(Math.random() * 6) + 1;
+                const badge = card.querySelector('.rooms-left');
+                badge.innerText = `${left} left`;
+                badge.classList.remove('visible');
+            });
+        }
+
+        // Update event list with database data
+        function updateEventList() {
+            const eventListContainer = document.getElementById('event-list');
+            eventListContainer.innerHTML = '';
+            
+            eventsData.forEach(event => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                
+                eventItem.innerHTML = `
+                    <span>${event.name} ($${event.price})</span>
+                    <button class="plus-btn" data-event="${event.event_key}" data-price="${event.price}">+</button>
+                `;
+                
+                eventListContainer.appendChild(eventItem);
+                
+                // Add click event to button
+                const btn = eventItem.querySelector('.plus-btn');
+                btn.addEventListener('click', function() {
+                    const eventKey = this.getAttribute('data-event');
+                    if (!selectedEvents.includes(eventKey)) {
+                        selectedEvents.push(eventKey);
+                        this.classList.add('selected');
+                    } else {
+                        selectedEvents = selectedEvents.filter(e => e !== eventKey);
+                        this.classList.remove('selected');
+                    }
+                    updateSummary();
+                });
+            });
+        }
+
         // Flatpickr for stay dates - with expanded calendar
         flatpickr("#stay-dates", {
             mode: "range",
             dateFormat: "Y-m-d",
             inline: true,
-            showMonths: 2, // Zeigt zwei Monate nebeneinander an
+            showMonths: 2,
             onChange: function(selectedDates, dateStr, instance) {
                 stayDates = selectedDates;
                 updateSummary();
                 showRoomsLeftIfDatesSelected();
-                // Kalender schließen, wenn beide Daten ausgewählt wurden
                 if (selectedDates.length === 2) {
                     instance.close();
                 }
             }
         });
 
-        // Room selection logic
-        document.querySelectorAll('.room-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.room-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                updateSummary();
-            });
-        });
-
-        // Event selection logic
-        document.querySelectorAll('.plus-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const event = this.getAttribute('data-event');
-                if (!selectedEvents.includes(event)) {
-                    selectedEvents.push(event);
-                    this.classList.add('selected');
-                } else {
-                    selectedEvents = selectedEvents.filter(e => e !== event);
-                    this.classList.remove('selected');
-                }
-                updateSummary();
-            });
-        });
-
         // Update summary
         function updateSummary() {
             const selectedRoomCard = document.querySelector('.room-card.selected');
+            if (!selectedRoomCard) return;
+            
             const room = selectedRoomCard.getAttribute('data-room');
             const roomTitle = selectedRoomCard.querySelector('.room-card-title').innerText;
             const roomDesc = selectedRoomCard.querySelector('.room-card-desc').innerText;
-            const roomPrice = parseInt(selectedRoomCard.getAttribute('data-price'), 10);
+            const roomPrice = parseFloat(selectedRoomCard.getAttribute('data-price'));
 
             // Calculate nights
             let nights = 0;
@@ -210,9 +227,12 @@
             let eventsTotal = 0;
             if (selectedEvents.length > 0) {
                 eventsHtml = '<ul>';
-                selectedEvents.forEach(ev => {
-                    eventsHtml += `<li>${ev.charAt(0).toUpperCase() + ev.slice(1)} ($${eventPrices[ev]})</li>`;
-                    eventsTotal += eventPrices[ev];
+                selectedEvents.forEach(eventKey => {
+                    const event = eventsData.find(e => e.event_key === eventKey);
+                    if (event) {
+                        eventsHtml += `<li>${event.name} ($${event.price})</li>`;
+                        eventsTotal += parseFloat(event.price);
+                    }
                 });
                 eventsHtml += '</ul>';
             } else {
@@ -236,19 +256,27 @@
         // Checkout button
         document.getElementById('checkout-btn').addEventListener('click', async function() {
             const selectedRoomCard = document.querySelector('.room-card.selected');
+            if (!selectedRoomCard) return;
+            
             const room = selectedRoomCard.getAttribute('data-room');
             const roomTitle = selectedRoomCard.querySelector('.room-card-title').innerText;
             const roomDesc = selectedRoomCard.querySelector('.room-card-desc').innerText;
-            const roomPrice = parseInt(selectedRoomCard.getAttribute('data-price'), 10);
+            const roomPrice = parseFloat(selectedRoomCard.getAttribute('data-price'));
+            
             let nights = 0;
             if (stayDates.length === 2) {
                 const diff = Math.abs(stayDates[1] - stayDates[0]);
                 nights = Math.ceil(diff / (1000 * 60 * 60 * 24));
             }
-            const events = selectedEvents.map(ev => ({
-                name: ev,
-                price: eventPrices[ev]
-            }));
+            
+            const events = selectedEvents.map(eventKey => {
+                const event = eventsData.find(e => e.event_key === eventKey);
+                return {
+                    name: event ? event.name : eventKey,
+                    price: event ? event.price : eventPrices[eventKey] || 0
+                };
+            });
+            
             const booking = {
                 room,
                 roomTitle,
@@ -258,23 +286,14 @@
                 stayDates: stayDates.map(d => d.toISOString()),
                 events
             };
+            
             await fetch('/save-booking', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(booking)
             });
+            
             window.location.href = '/shop';
-        });
-
-        // Initial summary
-        updateSummary();
-
-        // Generate random "rooms left" for each room card and store the value
-        document.querySelectorAll('.room-card').forEach(card => {
-            const left = Math.floor(Math.random() * 6) + 1; // 1 to 6 rooms left
-            const badge = card.querySelector('.rooms-left');
-            badge.innerText = `${left} left`;
-            badge.classList.remove('visible'); // Hide initially
         });
 
         // Show badges only when a date range is selected
@@ -286,16 +305,20 @@
             }
         }
 
-        // Also call once on page load in case dates are pre-filled
-        showRoomsLeftIfDatesSelected();
-
-        fetch('/shop-badge')
-            .then(res => res.json())
-            .then(data => {
-                if (data.hasBooking) {
-                document.getElementById('shop-badge').style.display = 'inline-block';
-                }
-            });
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            fetch('/shop-badge')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.hasBooking) {
+                        const badge = document.getElementById('shop-badge');
+                        if (badge) badge.style.display = 'inline-block';
+                    }
+                })
+                .catch(err => console.log('Shop badge error:', err));
+        });
     </script>
 </body>
 </html>
